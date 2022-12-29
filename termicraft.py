@@ -1,5 +1,8 @@
 from msvcrt import kbhit, getch
+import colorama
 import os
+
+import random
 
 from colors import *
 
@@ -8,6 +11,21 @@ def cls(n = 0):
         os.system('cls')
     else:
         print('\b \b'*n,end='')
+
+def overwrite(new, n):
+    final = new
+    len_new = len(new)
+    
+    if len_new < n:
+        final += ' '*(n-len_new)
+        length = n
+    else:
+        length = len_new
+
+    final += '\b'*length
+
+    print(final, end='')
+    return length
 
 def draw_screen():
     return ""
@@ -24,6 +42,4 @@ while running:
             pass
 
     final = draw_screen()
-    cls(n)
-    print(final, end = "")
-    n=len(final)
+    n = overwrite(final, n)
