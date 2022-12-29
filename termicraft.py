@@ -40,22 +40,22 @@ def overwrite(new, n):
     print(final, end='')
     return length
 
-def insert(text, where, line):
-    return line[:where] + text + line[where+len(text):]
+def insert(text, x, y, lines):
+    lines[y] = lines[y][:x] + text + lines[y][x+len(text):]
 
-def left(text, line):
-    return text + line[len(text):]
+def left(text, y, lines):
+    lines[y] =  text + lines[y][len(text):]
 
-def right(text, line):
-    return line[:-len(text)] + text
+def right(text, y, lines):
+    lines[y] = lines[y][:-len(text)] + text
 
-def center(text, line, start=0, end=width):
-    where = start+((end-start)-len(text))//2
-    return insert(text,where,line)
+def center(text, y, lines, start=0, end=width):
+    x = start+((end-start)-len(text))//2
+    insert(text,x,y,lines)
 
 def vline(start, end, x, lines):
     for i in range(start,end):
-        lines[i] = insert('|',x,lines[i])
+        insert('|',x,i,lines)
 
 def draw_screen():
     lines = [' '*width for i in range(height)]
@@ -63,27 +63,27 @@ def draw_screen():
     if state==stateType.MAIN:
 
         # fps
-        lines[0] = left(f'FPS:{fps:.2f}',lines[0])
+        left(f'FPS:{fps:.2f}',0,lines)
 
         # action
-        lines[0] = center("Breaking stone",lines[0])
-        lines[1] = left('  [',lines[1])
-        lines[1] = right(']  ',lines[1])
-        lines[1] = insert('#'*int(progress/100*(width-6)),3,lines[1])
-        lines[1] = center(str(int(progress))+"%",lines[1])
+        center("Breaking stone",0,lines)
+        left('  [',1,lines)
+        right(']  ',1,lines)
+        insert('#'*int(progress/100*(width-6)),3,1,lines)
+        center(str(int(progress))+"%",1,lines)
 
         # environment and mobs headers
-        lines[2] = center('Environment',lines[2],end=width//2)
-        lines[2] = center('Mobs',       lines[2],start=width//2)
+        center('Environment',2,lines,end=width//2)
+        center('Mobs',       2,lines,start=width//2)
 
         # seperator
         vline(2,23,width//2,lines)
 
         # actions
-        lines[3] = left('  b - Dig Down | B - Build up',lines[3])
+        left('  b - Dig Down | B - Build up',3,lines)
         i = 5
         for action in actions:
-            lines[i] = left(f'  {action[0]} - {action[1]}',lines[i])
+            left(f'  {action[0]} - {action[1]}',i,lines)
             i+=2
 
         # mobs
@@ -92,8 +92,8 @@ def draw_screen():
             name = {mobType.ZOMBIE:'Zombie',mobType.SKELETON:'Skeleton',mobType.SPIDER:'Spider'}[mob[1].type]
             arm_names = [{armType.NONE:'NONE',armType.LEATHER:'LTHR',armType.IRON:'IRON',armType.GOLD:'GOLD',armType.DIAMOND:'DMND'}[j] for j in mob[1].arm]
 
-            lines[i] = insert(f'{mob[0]} - {name}',width//2+3,lines[i])
-            lines[i+1] = insert(f'Armor: {", ".join(arm_names)}',width//2+7,lines[i+1])
+            insert(f'{mob[0]} - {name}',width//2+3,i,lines)
+            insert(f'Armor: {", ".join(arm_names)}',width//2+7,i+1,lines)
             i+=3
 
 
