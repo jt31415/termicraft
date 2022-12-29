@@ -57,6 +57,15 @@ def vline(start, end, x, lines):
     for i in range(start,end):
         insert('|',x,i,lines)
 
+def draw_rect(rect, lines):
+    insert('┏'+'━'*(rect[2]-2)+'┓',rect[0],rect[1]-1,lines)         # top
+    vline(rect[1], rect[1]+rect[3]-2, rect[0], lines)               # left
+    vline(rect[1], rect[1]+rect[3]-2, rect[0] + rect[2]-1, lines)   # right
+    insert('┗'+'━'*(rect[2]-2)+'┛',rect[0],rect[1]+rect[3]-2,lines) # bottom
+
+def inv_slot(x, y, lines):
+    draw_rect([x,y,6,3],lines)
+
 def draw_screen():
     lines = [' '*width for i in range(height)]
 
@@ -95,6 +104,12 @@ def draw_screen():
             insert(f'{mob[0]} - {name}',width//2+3,i,lines)
             insert(f'Armor: {", ".join(arm_names)}',width//2+7,i+1,lines)
             i+=3
+
+        # position rect
+        draw_rect([4,19,33,5],lines)
+
+        #hotbar
+        inv_slot(3, 28, lines)
 
 
         for y, line in enumerate(lines):
