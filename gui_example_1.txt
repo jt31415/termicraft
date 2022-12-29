@@ -1,0 +1,30 @@
+FPS:60.0     Breaking Stone             
+ [#################50%                ] 
+         Environment         ┃   Mobs   
+ b-Dig down|B-Build up       ┃          
+                             ┃f-Zombie  
+ q-Break log                 ┃  NINL    
+                             ┃4-Skeleton
+ 1-Break leaves              ┃  DDNN    
+                             ┃          
+ 2-Break grass block (b)     ┃          
+                             ┃          
+ u-Use chest                 ┃          
+                             ┃          
+ x-Build Nether Portal       ┃          
+                             ┃          
+ 3-Build Shelter             ┃          
+                             ┃          
+                             ┃          
+ ┏━━━━━━━━━━━━━━━━━━━━━━━━━┓ ┃          
+ ┃Coords:3.14/1.59/2.56    ┃ ┃          
+ ┃World:Overworld          ┃ ┃          
+ ┃Biome:Oak Forest         ┃ ┃          
+ ┗━━━━━━━━━━━━━━━━━━━━━━━━━┛ ┃          
+╭ T  V T Z WT P   T  #   T  @ N ^  T   ╮
+╰        f           4                 ╯
+ ♥♥♥♥♥♥♥♥♥♥    AAAAa         ┯┯┯┯┯┯┯┰┰┰ 
+[━━━━━━━━━━━━━━━━━━42━━━━              ]
+┏━┓┏━┓┏━┓┏━┓┏━┓┏━┓┏━┓┏━┓┏━┓┏━┓ E to open
+┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃┃ ┃ inventory
+┗━ ┗━ ┗━ ┗━ ┗━ ┗━ ┗━ ┗━ ┗━ ┗━   Esc-menu
