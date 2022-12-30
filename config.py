@@ -1,0 +1,7 @@
+size=width,height=(100,30)
+MAXFPS = 60.0
+MINFRAMETIME = 1/MAXFPS
+TIMESAMPLE = 5.0
+FRAMESAMPLES = 100
+ADJUST = 0.1 # to adjust to_sleep
+MINSLEEPTIME = 0.0001
