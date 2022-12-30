@@ -2,13 +2,19 @@ from msvcrt import kbhit, getch
 import colorama
 import os
 
-import random
+import random, time
 
 from colors import *
 
 from enums import *
 
 size=width,height=(100,30)
+MAXFPS = 60.0
+MINFRAMETIME = 1/MAXFPS
+TIMESAMPLE = 5.0
+FRAMESAMPLES = 100
+ADJUST = 0.1 # to adjust to_sleep
+MINSLEEPTIME = 0.0001
 
 class Mob:
     def __init__(self, type: int, arm: list[int]) -> None:
@@ -116,10 +122,21 @@ def draw_screen():
 
             for x, char in enumerate(lines[y]):
                 pass
-
+    
+    lines.extend(debug) # DEBUG
     return "\n".join(lines)
 
 state = stateType.MAIN
+
+debug = ['DEBUG','',''] # DEBUG
+
+recent_frames = []
+frame_times = [0 for i in range(FRAMESAMPLES)]
+
+# place
+start = time.perf_counter()
+end = time.perf_counter()
+to_sleep = MINSLEEPTIME
 
 # example vars
 fps = 60.0
@@ -134,6 +151,23 @@ print('\033[?25l',end='') # hide cursor
 n=0
 running=True
 while running:
+
+    last_start = start # last frame's start
+    start = time.perf_counter()
+
+    last_frame_time = end - last_start
+    frame_times.append(last_frame_time); frame_times.pop(0)
+    avg_time = sum(frame_times)/len(frame_times)
+
+    adjust = (MINFRAMETIME - (start-last_start)) * ADJUST
+    to_sleep = max(MINSLEEPTIME, to_sleep + adjust)
+
+    debug[1] = f'avg_time: {avg_time:.6f}, to_sleep: {to_sleep:.6f}, start - end: {start-end:.6f}, (start-end)/to_sleep: {(start-end)/to_sleep:.6f}, start - last_start: {start-last_start}'
+
+    # get fps
+    recent_frames.append(start)
+    recent_frames = [frame for frame in recent_frames if (start - frame) <= TIMESAMPLE]
+    fps = len(recent_frames)/TIMESAMPLE
     
     if kbhit():
         key = getch()
@@ -143,8 +177,12 @@ while running:
             pass
 
         if key=='q':
-            print('\033[?25h', end="")
+            print('\033[?25h', end="") # show cursor
             running=False
 
     final = draw_screen()
     n = overwrite(final, n)
+
+    end = time.perf_counter()
+
+    time.sleep(to_sleep) # account for going faster than max frame rate
